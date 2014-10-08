@@ -1,15 +1,19 @@
 var uuid = require('node-uuid')
 
-module.exports = function (options) {
+module.exports = function (options, logger) {
+  options = options || {}
+  logger = logger || options.logger
 
-  if (options.constructor && options.constructor.name === 'Logger')
-    options = { logger: options }
+  if (!logger && options.constructor && options.constructor.name === 'Logger') {
+    logger = options
+    options = {}
+  }
 
-  if (!options.logger)
-    throw new Error('`options.logger` is required')
+  if (!logger) {
+    throw new Error('`logger` is required')
+  }
 
-  var logger = options.logger
-    , headerName = options.headerName || 'X-Request-Id'
+  var headerName = options.headerName || 'X-Request-Id'
     , headerNameLower = headerName.toLowerCase()
     , propertyName = options.propertyName || 'reqId'
     , logName = options.logName || 'req_id'
