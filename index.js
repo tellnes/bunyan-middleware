@@ -28,9 +28,14 @@ module.exports = function (options) {
     req[propertyName] = res[propertyName] = id
     res.setHeader(headerName, id)
 
-    req.log.info({ req: req }, 'start request')
+    req.log.info('request start')
     res.on('finish', function() {
-      res.log.info({ res: res }, 'response finish')
+      res.log.info(
+          { res: res
+          , req: req
+          }
+        , 'request finish'
+        )
     })
 
     next()
