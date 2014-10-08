@@ -13,8 +13,43 @@ module.exports = function (options) {
     , headerNameLower = headerName.toLowerCase()
     , propertyName = options.propertyName || 'reqId'
     , logName = options.logName || 'req_id'
+    , obscureHeaders = options.obscureHeaders
 
-  logger = logger.child({ serializers: logger.constructor.stdSerializers })
+  function requestSerializer(req) {
+    if (!req || !req.connection) return req
+
+    var headers
+    if (obscureHeaders) {
+      headers = {}
+      Object.keys(req.headers).forEach(function (name) {
+        headers[name] = req.headers[name]
+      })
+
+      for (var i = 0; i < obscureHeaders.length; i++) {
+        headers[ obscureHeaders[i] ] = null
+      }
+    } else {
+      headers = req.headers
+    }
+
+    var ret =
+      { method: req.method
+      , url: req.url
+      , headers: headers
+      , remoteAddress: req.connection.remoteAddress
+      , remotePort: req.connection.remotePort
+      }
+
+    return ret
+  }
+
+  logger = logger.child(
+    { serializers:
+      { req: requestSerializer
+      , res: logger.constructor.stdSerializers.res
+      }
+    }
+  )
 
   return function (req, res, next) {
     var id = req[propertyName]
