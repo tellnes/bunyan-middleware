@@ -21,6 +21,8 @@ module.exports = function (options) {
           || req.headers[headerNameLower]
           || uuid.v1()
 
+    var start = Date.now()
+
     var prefs = {}
     prefs[logName] = id
     req.log = res.log = logger.child(prefs, true)
@@ -33,6 +35,7 @@ module.exports = function (options) {
       res.log.info(
           { res: res
           , req: req
+          , duration: Date.now() - start
           }
         , 'request finish'
         )
