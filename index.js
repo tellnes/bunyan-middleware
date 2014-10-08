@@ -14,6 +14,8 @@ module.exports = function (options) {
     , propertyName = options.propertyName || 'reqId'
     , logName = options.logName || 'req_id'
 
+  logger = logger.child({ serializers: logger.constructor.stdSerializers })
+
   return function (req, res, next) {
     var id = req[propertyName]
           || req.headers[headerNameLower]
