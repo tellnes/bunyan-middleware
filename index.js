@@ -21,7 +21,7 @@ module.exports = function (options) {
 
     var prefs = {}
     prefs[logName] = id
-    req.log = res.log = logger.child(prefs)
+    req.log = res.log = logger.child(prefs, true)
 
     req[propertyName] = res[propertyName] = id
     res.setHeader(headerName, id)
