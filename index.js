@@ -72,11 +72,20 @@ module.exports = function (options, logger) {
     req.log.info('request start')
     res.on('finish', function() {
       res.log.info(
-          { res: res
-          , req: req
+          { req: req
+          , res: res
           , duration: Date.now() - start
           }
         , 'request finish'
+        )
+    })
+    res.on('close', function () {
+      res.log.warn(
+          { req: req
+          , res: res
+          , duration: Date.now() - start
+          }
+        , 'request socket closed'
         )
     })
 
