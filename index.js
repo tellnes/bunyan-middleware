@@ -19,6 +19,14 @@ module.exports = function (options, logger) {
     , logName = options.logName || 'req_id'
     , obscureHeaders = options.obscureHeaders
 
+  if (obscureHeaders && obscureHeaders.length) {
+    obscureHeaders = obscureHeaders.map(function (name) {
+      return name.toLowerCase()
+    })
+  } else {
+    obscureHeaders = false
+  }
+
   function requestSerializer(req) {
     if (!req || !req.connection) return req
 
