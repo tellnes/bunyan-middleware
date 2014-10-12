@@ -66,7 +66,7 @@ module.exports = function (options, logger) {
   return function (req, res, next) {
     var id = req[propertyName]
           || req.headers[headerNameLower]
-          || uuid.v1()
+          || uuid.v4()
 
     var start = Date.now()
 

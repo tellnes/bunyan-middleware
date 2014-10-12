@@ -4,7 +4,7 @@
   "description": "bunyan-middleware",
   "main": "index.js",
   "dependencies": {
-    "node-uuid": "~1.4.0"
+    "node-uuid": "^1.4.1"
   },
   "devDependencies": {},
   "scripts": {},
