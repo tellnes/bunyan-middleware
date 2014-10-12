@@ -1,7 +1,7 @@
 {
   "name": "bunyan-middleware",
   "version": "0.0.1",
-  "description": "bunyan-middleware",
+  "description": "Request, response logger middleware using bunyan. Also provides request<>response duration.",
   "main": "index.js",
   "dependencies": {
     "node-uuid": "^1.4.1"
@@ -12,7 +12,16 @@
     "type": "git",
     "url": "git://github.com/tellnes/bunyan-middleware.git"
   },
-  "keywords": [],
+  "keywords": [
+    "bunyan",
+    "logger",
+    "express",
+    "request",
+    "response",
+    "connect",
+    "http",
+    "duration"
+  ],
   "author": "Christian Tellnes <christian@tellnes.no> (http://christian.tellnes.com)",
   "license": "MIT"
 }
