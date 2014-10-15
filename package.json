@@ -1,6 +1,6 @@
 {
   "name": "bunyan-middleware",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Request, response logger middleware using bunyan. Also provides request<>response duration.",
   "main": "index.js",
   "dependencies": {
