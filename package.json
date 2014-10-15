@@ -23,5 +23,8 @@
     "duration"
   ],
   "author": "Christian Tellnes <christian@tellnes.no> (http://christian.tellnes.com)",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
 }
