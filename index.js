@@ -18,6 +18,9 @@ module.exports = function (options, logger) {
     , propertyName = options.propertyName || 'reqId'
     , logName = options.logName || 'req_id'
     , obscureHeaders = options.obscureHeaders
+    , parentRequestSerializer = logger.serializers &&
+                                logger.serializers.req ||
+                                logger.constructor.stdSerializers.req
 
   if (obscureHeaders && obscureHeaders.length) {
     obscureHeaders = obscureHeaders.map(function (name) {
@@ -28,11 +31,10 @@ module.exports = function (options, logger) {
   }
 
   function requestSerializer(req) {
-    if (!req || !req.connection) return req
+    req = parentRequestSerializer(req)
 
-    var headers
-    if (obscureHeaders) {
-      headers = {}
+    if (req && req.headers) {
+      var headers = {}
       Object.keys(req.headers).forEach(function (name) {
         headers[name] = req.headers[name]
       })
@@ -40,24 +42,16 @@ module.exports = function (options, logger) {
       for (var i = 0; i < obscureHeaders.length; i++) {
         headers[ obscureHeaders[i] ] = null
       }
-    } else {
-      headers = req.headers
+
+      req.headers = headers
     }
 
-    var ret =
-      { method: req.method
-      , url: req.url
-      , headers: headers
-      , remoteAddress: req.connection.remoteAddress
-      , remotePort: req.connection.remotePort
-      }
-
-    return ret
+    return req
   }
 
   logger = logger.child(
     { serializers:
-      { req: logger.serializers && logger.serializers.req || requestSerializer
+      { req: obscureHeaders ? requestSerializer : parentRequestSerializer
       , res: logger.serializers && logger.serializers.res || logger.constructor.stdSerializers.res
       }
     }
