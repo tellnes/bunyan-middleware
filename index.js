@@ -57,8 +57,8 @@ module.exports = function (options, logger) {
 
   logger = logger.child(
     { serializers:
-      { req: requestSerializer
-      , res: logger.constructor.stdSerializers.res
+      { req: logger.serializers && logger.serializers.req || requestSerializer
+      , res: logger.serializers && logger.serializers.res || logger.constructor.stdSerializers.res
       }
     }
   )
