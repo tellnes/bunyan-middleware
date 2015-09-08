@@ -85,6 +85,14 @@ The request id is also available as `req.reqId`.
 
 - Eg: `[ 'Authorization' ]`
 
+**`requestStart`** Default: `false`
+
+- Log the start of the request.
+
+**`verbose`** Default: `false`
+
+- Log `req` and `res` for `request start` and `request finish`.
+
 
 ## License
 

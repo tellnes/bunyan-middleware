@@ -18,6 +18,8 @@ module.exports = function (options, logger) {
     , propertyName = options.propertyName || 'reqId'
     , logName = options.logName || 'req_id'
     , obscureHeaders = options.obscureHeaders
+    , requestStart = options.requestStart || false
+    , verbose = options.verbose || false
     , parentRequestSerializer = logger.serializers &&
                                 logger.serializers.req ||
                                 logger.constructor.stdSerializers.req
@@ -71,15 +73,18 @@ module.exports = function (options, logger) {
     req[propertyName] = res[propertyName] = id
     res.setHeader(headerName, id)
 
-    req.log.info('request start')
+    if (requestStart || verbose) {
+      var reqStartData = { req: req }
+      if (verbose) reqStartData.res = res
+      req.log.info(reqStartData, 'request start')
+    }
     res.on('finish', function() {
-      res.log.info(
-          { req: req
-          , res: res
-          , duration: Date.now() - start
-          }
-        , 'request finish'
-        )
+      var reqFinishData =
+        { res: res
+        , duration: Date.now() - start
+        }
+      if (!requestStart || verbose) reqFinishData.req = req
+      res.log.info(reqFinishData, 'request finish')
     })
     res.on('close', function () {
       res.log.warn(
