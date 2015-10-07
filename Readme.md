@@ -17,7 +17,7 @@ Request, response logger middleware for [bunyan](https://github.com/trentm/node-
 - provides `req.log` and `res.log` as an id-specialized logger for you to track your request in your entire application, every time you access the `request` or `response` object
 - compatible with pure [http server](http://nodejs.org/api/http.html#http_http_createserver_requestlistener), [express](https://github.com/strongloop/express), [connect](https://github.com/senchalabs/connect) and any http middleware system
 - uses serializers for `req` and `res` based on [bunyan serializers](https://github.com/trentm/node-bunyan#serializers) if you do not already have a serializer defined.
-- obscure headers containing sensitive information in log outputs (configureable with `obscureHeaders`)
+- obscure headers containing sensitive information in log outputs (configurable with `obscureHeaders`)
 
 ## Install
 
