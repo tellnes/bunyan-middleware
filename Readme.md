@@ -61,6 +61,14 @@ add it to the response headers.
 
 The request id is also available as `req.reqId`.
 
+## Express and mounted apps
+
+If you are using this with express and mounted app which rewrites `req.url` and
+you are using `bunyan.serializers.req`, then the url in the log output will be
+the rewritten url. To fix that bunyan-middleware is using its own request
+serializer instead of the default one which is using `req.originalUrl` instead.
+
+
 ## Options
 
 **`logger`** REQUIRED

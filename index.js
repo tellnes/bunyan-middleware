@@ -20,9 +20,7 @@ module.exports = function (options, logger) {
     , obscureHeaders = options.obscureHeaders
     , requestStart = options.requestStart || false
     , verbose = options.verbose || false
-    , parentRequestSerializer = logger.serializers &&
-                                logger.serializers.req ||
-                                logger.constructor.stdSerializers.req
+    , parentRequestSerializer = logger.serializers && logger.serializers.req
 
   if (obscureHeaders && obscureHeaders.length) {
     obscureHeaders = obscureHeaders.map(function (name) {
@@ -33,27 +31,39 @@ module.exports = function (options, logger) {
   }
 
   function requestSerializer(req) {
-    req = parentRequestSerializer(req)
+    var obj
+    if (parentRequestSerializer) {
+      obj = parentRequestSerializer(req)
+    } else {
+      obj =
+        { method: req.method
+        , url: req.originalUrl || req.url
+        , headers: req.headers
+        , query: req.query
+        , remoteAddress: req.connection.remoteAddress
+        , remotePort: req.connection.remotePort
+        }
+    }
 
-    if (req && req.headers) {
+    if (obscureHeaders && obj.headers) {
       var headers = {}
-      Object.keys(req.headers).forEach(function (name) {
-        headers[name] = req.headers[name]
+      Object.keys(obj.headers).forEach(function(name) {
+        headers[name] = obj.headers[name]
       })
 
       for (var i = 0; i < obscureHeaders.length; i++) {
         headers[ obscureHeaders[i] ] = null
       }
 
-      req.headers = headers
+      obj.headers = headers
     }
 
-    return req
+    return obj
   }
 
   logger = logger.child(
     { serializers:
-      { req: obscureHeaders ? requestSerializer : parentRequestSerializer
+      { req: requestSerializer
       , res: logger.serializers && logger.serializers.res || logger.constructor.stdSerializers.res
       }
     }
