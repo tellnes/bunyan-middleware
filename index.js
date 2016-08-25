@@ -21,6 +21,7 @@ module.exports = function (options, logger) {
     , requestStart = options.requestStart || false
     , verbose = options.verbose || false
     , parentRequestSerializer = logger.serializers && logger.serializers.req
+    , level = options.level || 'info'
 
   if (obscureHeaders && obscureHeaders.length) {
     obscureHeaders = obscureHeaders.map(function (name) {
@@ -86,7 +87,7 @@ module.exports = function (options, logger) {
     if (requestStart || verbose) {
       var reqStartData = { req: req }
       if (verbose) reqStartData.res = res
-      req.log.info(reqStartData, 'request start')
+      req.log[level](reqStartData, 'request start')
     }
     res.on('finish', function() {
       var reqFinishData =
@@ -94,7 +95,7 @@ module.exports = function (options, logger) {
         , duration: Date.now() - start
         }
       if (!requestStart || verbose) reqFinishData.req = req
-      res.log.info(reqFinishData, 'request finish')
+      res.log[level](reqFinishData, 'request finish')
     })
     res.on('close', function () {
       res.log.warn(
