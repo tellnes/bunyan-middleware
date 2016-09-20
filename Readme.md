@@ -41,6 +41,9 @@ app.use(bunyanMiddleware(
     , logName: 'req_id'
     , obscureHeaders: []
     , logger: logger
+    , additionalRequestFinishData: function(req, res) {
+        return { example: true };
+      }
     }
   )
 
@@ -82,6 +85,10 @@ serializer instead of the default one which is using `req.originalUrl` instead.
 **`propertyName`** Default: `'reqId'`
 
 - The name for the property on the request object to set the request id.
+
+**`additionalRequestFinishData`** Default: `undefined`
+
+- A function receiving `req` and `res` as arguments returning an object. The elements in the returned object will be added to the fields in the `request finish` message.
 
 **`logName`** Default: `'req_id'`
 

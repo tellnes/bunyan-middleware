@@ -16,6 +16,7 @@ module.exports = function (options, logger) {
   var headerName = options.headerName || 'X-Request-Id'
     , headerNameLower = headerName.toLowerCase()
     , propertyName = options.propertyName || 'reqId'
+    , additionalRequestFinishData = options.additionalRequestFinishData
     , logName = options.logName || 'req_id'
     , obscureHeaders = options.obscureHeaders
     , requestStart = options.requestStart || false
@@ -95,6 +96,14 @@ module.exports = function (options, logger) {
         , duration: Date.now() - start
         }
       if (!requestStart || verbose) reqFinishData.req = req
+      if (additionalRequestFinishData) {
+        var additionReqFinishData = additionalRequestFinishData(req, res)
+        if (additionReqFinishData) {
+          Object.keys(additionReqFinishData).forEach(function(name) {
+            reqFinishData[name] = additionReqFinishData[name]
+          })
+        }
+      }
       res.log[level](reqFinishData, 'request finish')
     })
     res.on('close', function () {
