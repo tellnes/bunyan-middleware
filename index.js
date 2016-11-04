@@ -76,7 +76,7 @@ module.exports = function (options, logger) {
           || req.headers[headerNameLower]
           || uuid.v4()
 
-    var start = Date.now()
+    var start = process.hrtime()
 
     var prefs = {}
     prefs[logName] = id
@@ -93,7 +93,7 @@ module.exports = function (options, logger) {
     res.on('finish', function() {
       var reqFinishData =
         { res: res
-        , duration: Date.now() - start
+        , duration: getDuration(start)
         }
       if (!requestStart || verbose) reqFinishData.req = req
       if (additionalRequestFinishData) {
@@ -110,7 +110,7 @@ module.exports = function (options, logger) {
       res.log.warn(
           { req: req
           , res: res
-          , duration: Date.now() - start
+          , duration: getDuration(start)
           }
         , 'request socket closed'
         )
@@ -118,4 +118,9 @@ module.exports = function (options, logger) {
 
     next()
   }
+}
+
+function getDuration(start) {
+  var diff = process.hrtime(start)
+  return diff[0] * 1e3 + diff[1] * 1e-6
 }
