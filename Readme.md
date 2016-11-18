@@ -94,6 +94,10 @@ serializer instead of the default one which is using `req.originalUrl` instead.
 
 - The name for the request id in the log output.
 
+**`level`** Default: `'info'`
+
+- At which log level `request start` and `request finish` should be logged.
+
 **`obscureHeaders`** Default: `null`
 
 - Set to an array with header nams to remove them from log output.
@@ -107,7 +111,6 @@ serializer instead of the default one which is using `req.originalUrl` instead.
 **`verbose`** Default: `false`
 
 - Log `req` and `res` for `request start` and `request finish`.
-
 
 ## License
 
