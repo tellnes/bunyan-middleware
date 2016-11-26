@@ -12,7 +12,7 @@ Request, response logger middleware for [bunyan](https://github.com/trentm/node-
 - log response as `res`
 - log response close events as warnings
 - log request<>response duration in milliseconds as `duration`
-- creates, use and forward to response the `x-request-id` request header: get it if present, create it otherwise ([uuid.v4()](https://github.com/broofa/node-uuid#uuidv4options--buffer--offset))
+- creates, use and forward to response the `x-request-id` request header: get it if present, create it otherwise ([uuid.v1()](https://www.npmjs.com/package/uuid#uuidv1options--buffer--offset))
 - log request id as `req_id` and exposes it as `req.reqId`
 - provides `req.log` and `res.log` as an id-specialized logger for you to track your request in your entire application, every time you access the `request` or `response` object
 - compatible with pure [http server](http://nodejs.org/api/http.html#http_http_createserver_requestlistener), [express](https://github.com/strongloop/express), [connect](https://github.com/senchalabs/connect) and any http middleware system
@@ -58,9 +58,9 @@ app.get('/', function (req, res) {
 
 Will use and forward `X-Request-Id` (case insensitive) header when present.
 
-Otherwise it will generate
-a [uuid.v4()](https://github.com/defunctzombie/node-uuid#uuidv4options--buffer--offset) and
-add it to the response headers.
+Otherwise it will generate a
+[uuid.v1()](https://www.npmjs.com/package/uuid#uuidv1options--buffer--offset)
+and add it to the response headers.
 
 The request id is also available as `req.reqId`.
 

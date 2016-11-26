@@ -4,7 +4,7 @@
   "description": "Request, response logger middleware using bunyan. Also provides request<>response duration.",
   "main": "index.js",
   "dependencies": {
-    "node-uuid": "^1.4.7"
+    "uuid": "^3.0.0"
   },
   "devDependencies": {},
   "scripts": {},
