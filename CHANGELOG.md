@@ -1,0 +1,13 @@
+# Change Log
+
+## v0.6.0
+
+- change UUID library from [node-uuid](http://npmjs.com/node-uuid)
+  to [uuid](https://www.npmjs.com/package/uuid).
+- change to UUID v1 algorithm, see
+  [#11](https://github.com/tellnes/bunyan-middleware/issues/11) for details.
+
+## Older version
+
+Information about earlier version can be found by reading the git log.
+Please open a pull request if you want to see it here.
