@@ -19,6 +19,7 @@ module.exports = function (options, logger) {
     , additionalRequestFinishData = options.additionalRequestFinishData
     , logName = options.logName || 'req_id'
     , obscureHeaders = options.obscureHeaders
+    , excludeHeaders = options.excludeHeaders
     , requestStart = options.requestStart || false
     , verbose = options.verbose || false
     , parentRequestSerializer = logger.serializers && logger.serializers.req
@@ -30,6 +31,14 @@ module.exports = function (options, logger) {
     })
   } else {
     obscureHeaders = false
+  }
+
+  if (excludeHeaders && excludeHeaders.length) {
+    excludeHeaders = excludeHeaders.map(function (name) {
+      return name.toLowerCase()
+    })
+  } else {
+    excludeHeaders = false
   }
 
   function requestSerializer(req) {
@@ -55,6 +64,19 @@ module.exports = function (options, logger) {
 
       for (var i = 0; i < obscureHeaders.length; i++) {
         headers[ obscureHeaders[i] ] = null
+      }
+
+      obj.headers = headers
+    }
+
+    if (excludeHeaders && obj.headers) {
+      var headers = {}
+      Object.keys(obj.headers).forEach(function(name) {
+        headers[name] = obj.headers[name]
+      })
+
+      for (var i = 0; i < excludeHeaders.length; i++) {
+        delete headers[ excludeHeaders[i] ]
       }
 
       obj.headers = headers
