@@ -25,21 +25,16 @@ module.exports = function (options, logger) {
     , parentRequestSerializer = logger.serializers && logger.serializers.req
     , level = options.level || 'info'
 
-  if (obscureHeaders && obscureHeaders.length) {
-    obscureHeaders = obscureHeaders.map(function (name) {
-      return name.toLowerCase()
-    })
-  } else {
-    obscureHeaders = false
+  function processHeaderNames(property) {
+    if (property && property.length) {
+      return property.map(function(name) { return name.toLowerCase() })
+    } else {
+      return false
+    }
   }
 
-  if (excludeHeaders && excludeHeaders.length) {
-    excludeHeaders = excludeHeaders.map(function (name) {
-      return name.toLowerCase()
-    })
-  } else {
-    excludeHeaders = false
-  }
+  obscureHeaders = processHeaderNames(obscureHeaders);
+  excludeHeaders = processHeaderNames(excludeHeaders);
 
   function requestSerializer(req) {
     var obj
