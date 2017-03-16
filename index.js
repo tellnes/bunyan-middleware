@@ -51,28 +51,20 @@ module.exports = function (options, logger) {
         }
     }
 
-    if (obscureHeaders && obj.headers) {
-      var headers = {}
-      Object.keys(obj.headers).forEach(function(name) {
-        headers[name] = obj.headers[name]
-      })
+    if (obj.headers && (obscureHeaders || excludeHeaders)) {
+      var headers = Object.keys(obj.headers).reduce(function(memo, name) {
+        if (excludeHeaders && excludeHeaders.includes(name)) {
+          return memo
+        }
 
-      for (var i = 0; i < obscureHeaders.length; i++) {
-        headers[ obscureHeaders[i] ] = null
-      }
+        if (obscureHeaders && obscureHeaders.includes(name)) {
+          memo[name] = null
+          return memo
+        }
 
-      obj.headers = headers
-    }
-
-    if (excludeHeaders && obj.headers) {
-      var headers = {}
-      Object.keys(obj.headers).forEach(function(name) {
-        headers[name] = obj.headers[name]
-      })
-
-      for (var i = 0; i < excludeHeaders.length; i++) {
-        delete headers[ excludeHeaders[i] ]
-      }
+        memo[name] = obj.headers[name]
+        return memo
+      }, {})
 
       obj.headers = headers
     }
