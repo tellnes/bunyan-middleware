@@ -21,6 +21,7 @@ module.exports = function (options, logger) {
     , obscureHeaders = options.obscureHeaders
     , requestStart = options.requestStart || false
     , verbose = options.verbose || false
+    , filterFunction = options.filterFunction || false
     , parentRequestSerializer = logger.serializers && logger.serializers.req
     , level = options.level || 'info'
 
@@ -72,6 +73,12 @@ module.exports = function (options, logger) {
   )
 
   return function (req, res, next) {
+
+    if (filterFunction && filterFunction(req, res)) {
+        next()
+        return
+    }
+
     var id = req[propertyName]
           || req.headers[headerNameLower]
           || uuid()
@@ -90,6 +97,7 @@ module.exports = function (options, logger) {
       if (verbose) reqStartData.res = res
       req.log[level](reqStartData, 'request start')
     }
+
     res.on('finish', function() {
       var reqFinishData =
         { res: res
@@ -106,6 +114,7 @@ module.exports = function (options, logger) {
       }
       res.log[level](reqFinishData, 'request finish')
     })
+
     res.on('close', function () {
       res.log.warn(
           { req: req
