@@ -90,7 +90,7 @@ serializer instead of the default one which is using `req.originalUrl` instead.
 
 - A function receiving `req` and `res` as arguments returning an object. The elements in the returned object will be added to the fields in the `request finish` message.
 
-**`filterFunction`** Default: `undefined`
+**`filter`** Default: `undefined`
 
 - A function receiving `req` and `res` as arguments returning a boolean. If this functions return value is truthy it will skip all logging for this request/response.
 

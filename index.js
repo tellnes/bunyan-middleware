@@ -21,7 +21,7 @@ module.exports = function (options, logger) {
     , obscureHeaders = options.obscureHeaders
     , requestStart = options.requestStart || false
     , verbose = options.verbose || false
-    , filterFunction = options.filterFunction || false
+    , filter = options.filterFunction || false
     , parentRequestSerializer = logger.serializers && logger.serializers.req
     , level = options.level || 'info'
 
