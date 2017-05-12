@@ -13,6 +13,7 @@ interface Params {
   requestStart?: boolean
   verbose?: boolean
   level?: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
+  filter?: { (req: Request, res: Response): boolean }
 }
 interface ParamsWithLogger extends Params {
   logger: Logger
