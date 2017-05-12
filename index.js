@@ -33,8 +33,8 @@ module.exports = function (options, logger) {
     }
   }
 
-  obscureHeaders = processHeaderNames(obscureHeaders);
-  excludeHeaders = processHeaderNames(excludeHeaders);
+  obscureHeaders = processHeaderNames(obscureHeaders)
+  excludeHeaders = processHeaderNames(excludeHeaders)
 
   function requestSerializer(req) {
     var obj
@@ -52,7 +52,7 @@ module.exports = function (options, logger) {
     }
 
     if (obj.headers && (obscureHeaders || excludeHeaders)) {
-      var headers = Object.keys(obj.headers).reduce(function(memo, name) {
+      obj.headers = Object.keys(obj.headers).reduce(function(memo, name) {
         if (excludeHeaders && excludeHeaders.includes(name)) {
           return memo
         }
@@ -65,8 +65,6 @@ module.exports = function (options, logger) {
         memo[name] = obj.headers[name]
         return memo
       }, {})
-
-      obj.headers = headers
     }
 
     return obj
