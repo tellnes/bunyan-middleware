@@ -1,5 +1,11 @@
 # Change Log
 
+## v0.7.0
+
+- add `excludeHeaders` option
+  ([#12](https://github.com/tellnes/bunyan-middleware/issues/12))
+- add typescript declaration
+
 ## v0.6.0
 
 - change UUID library from [node-uuid](http://npmjs.com/node-uuid)
