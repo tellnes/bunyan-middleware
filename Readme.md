@@ -100,7 +100,7 @@ serializer instead of the default one which is using `req.originalUrl` instead.
 
 **`obscureHeaders`** Default: `null`
 
-- Set to an array with header nams to remove them from log output.
+- Set to an array with header names to remove them from log output.
 
 - Eg: `[ 'Authorization' ]`
 
