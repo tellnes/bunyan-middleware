@@ -1,5 +1,11 @@
 # Change Log
 
+## v0.8.0
+
+- add `filter` option let users filter out certain log messages
+  ([#15](https://github.com/tellnes/bunyan-middleware/issues/15))
+
+
 ## v0.7.0
 
 - add `excludeHeaders` option
