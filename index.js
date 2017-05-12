@@ -19,18 +19,22 @@ module.exports = function (options, logger) {
     , additionalRequestFinishData = options.additionalRequestFinishData
     , logName = options.logName || 'req_id'
     , obscureHeaders = options.obscureHeaders
+    , excludeHeaders = options.excludeHeaders
     , requestStart = options.requestStart || false
     , verbose = options.verbose || false
     , parentRequestSerializer = logger.serializers && logger.serializers.req
     , level = options.level || 'info'
 
-  if (obscureHeaders && obscureHeaders.length) {
-    obscureHeaders = obscureHeaders.map(function (name) {
-      return name.toLowerCase()
-    })
-  } else {
-    obscureHeaders = false
+  function processHeaderNames(property) {
+    if (property && property.length) {
+      return property.map(function(name) { return name.toLowerCase() })
+    } else {
+      return false
+    }
   }
+
+  obscureHeaders = processHeaderNames(obscureHeaders)
+  excludeHeaders = processHeaderNames(excludeHeaders)
 
   function requestSerializer(req) {
     var obj
@@ -47,17 +51,20 @@ module.exports = function (options, logger) {
         }
     }
 
-    if (obscureHeaders && obj.headers) {
-      var headers = {}
-      Object.keys(obj.headers).forEach(function(name) {
-        headers[name] = obj.headers[name]
-      })
+    if (obj.headers && (obscureHeaders || excludeHeaders)) {
+      obj.headers = Object.keys(obj.headers).reduce(function(memo, name) {
+        if (excludeHeaders && excludeHeaders.includes(name)) {
+          return memo
+        }
 
-      for (var i = 0; i < obscureHeaders.length; i++) {
-        headers[ obscureHeaders[i] ] = null
-      }
+        if (obscureHeaders && obscureHeaders.includes(name)) {
+          memo[name] = null
+          return memo
+        }
 
-      obj.headers = headers
+        memo[name] = obj.headers[name]
+        return memo
+      }, {})
     }
 
     return obj
