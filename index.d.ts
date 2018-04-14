@@ -1,29 +1,27 @@
-import Logger = require('bunyan')
-import { Request, Response, RequestHandler } from 'express'
+import * as Logger from "bunyan"
+import * as express from "express"
 
-export = middleware
+declare namespace bunyanMiddleware {
+  interface Params {
+    headerName?: string
+    propertyName?: string
+    additionalRequestFinishData?: { (req: express.Request, res: express.Response): object }
+    logName?: string
+    obscureHeaders?: string[]
+    excludeHeaders?: string[]
+    requestStart?: boolean
+    verbose?: boolean
+    level?: "trace" | "debug" | "info" | "warn" | "error" | "fatal"
+    filter?: { (req: express.Request, res: express.Response): boolean }
+  }
 
-interface Params {
-  headerName?: string
-  propertyName?: string
-  additionalRequestFinishData?: { (req: Request, res: Response): object }
-  logName?: string
-  obscureHeaders?: string[]
-  excludeHeaders?: string[]
-  requestStart?: boolean
-  verbose?: boolean
-  level?: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
-  filter?: { (req: Request, res: Response): boolean }
+  interface ParamsWithLogger extends Params {
+    logger: Logger
+  }
+
 }
-interface ParamsWithLogger extends Params {
-  logger: Logger
-}
-declare function middleware(params: ParamsWithLogger): RequestHandler
-declare function middleware(params: Params, logger: Logger): RequestHandler
-declare function middleware(logger: Logger): RequestHandler
 
-
-declare module 'express' {
+declare module "express" {
   export interface Request {
     log: Logger
   }
@@ -31,3 +29,9 @@ declare module 'express' {
     log: Logger
   }
 }
+
+declare function bunyanMiddleware(params: bunyanMiddleware.ParamsWithLogger): express.RequestHandler
+declare function bunyanMiddleware(params: bunyanMiddleware.Params, logger: Logger): express.RequestHandler
+declare function bunyanMiddleware(logger: Logger): express.RequestHandler
+
+export = bunyanMiddleware
