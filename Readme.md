@@ -3,10 +3,6 @@
 [![Dependency Status](https://david-dm.org/tellnes/bunyan-middleware.png)](https://david-dm.org/tellnes/bunyan-middleware)
 [![devDependency Status](https://david-dm.org/tellnes/bunyan-middleware/dev-status.png)](https://david-dm.org/tellnes/bunyan-middleware#info=devDependencies)
 
-```shell
-npm install bunyan-middleware --save
-```
-
 Request, response logger middleware for [bunyan](https://github.com/trentm/node-bunyan):
 - log request as `req`
 - log response as `res`
@@ -20,6 +16,12 @@ Request, response logger middleware for [bunyan](https://github.com/trentm/node-
 - obscure headers containing sensitive information in log outputs (configurable with `obscureHeaders`)
 
 ## Install
+
+```shell
+yarn add bunyan-middleware
+```
+
+or
 
 ```shell
 npm install bunyan-middleware --save
