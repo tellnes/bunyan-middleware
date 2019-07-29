@@ -1,13 +1,13 @@
 import Logger = require('bunyan')
 import { Request, Response, RequestHandler } from 'express'
 
-export = middleware
+export = bunyanMiddleware
 
+declare function bunyanMiddleware(params: bunyanMiddleware.ParamsWithLogger): RequestHandler
+declare function bunyanMiddleware(params: bunyanMiddleware.Params, logger: Logger): RequestHandler
+declare function bunyanMiddleware(logger: Logger): RequestHandler
 
-declare function middleware(params: middleware.ParamsWithLogger): RequestHandler
-declare function middleware(params: middleware.Params, logger: Logger): RequestHandler
-declare function middleware(logger: Logger): RequestHandler
-declare namespace middleware {
+declare namespace bunyanMiddleware {
   export interface Params {
     headerName?: string
     propertyName?: string
