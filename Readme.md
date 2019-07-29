@@ -30,12 +30,12 @@ npm install bunyan-middleware --save
 ## Usage
 
 ```js
-var bunyan = require('bunyan')
-  , bunyanMiddleware = require('bunyan-middleware')
-  , express = require('express')
+const bunyan = require('bunyan')
+const bunyanMiddleware = require('bunyan-middleware')
+const express = require('express')
 
-var app = express()
-var logger = bunyan.createLogger({ name: 'My App' })
+const app = express()
+const logger = bunyan.createLogger({ name: 'My App' })
 
 app.use(bunyanMiddleware(
     { headerName: 'X-Request-Id'
@@ -44,7 +44,7 @@ app.use(bunyanMiddleware(
     , obscureHeaders: []
     , logger: logger
     , additionalRequestFinishData: function(req, res) {
-        return { example: true };
+        return { example: true }
       }
     }
   )
