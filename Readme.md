@@ -14,6 +14,7 @@ Request, response logger middleware for [bunyan](https://github.com/trentm/node-
 - compatible with pure [http server](http://nodejs.org/api/http.html#http_http_createserver_requestlistener), [express](https://github.com/strongloop/express), [connect](https://github.com/senchalabs/connect) and any http middleware system
 - uses serializers for `req` and `res` based on [bunyan serializers](https://github.com/trentm/node-bunyan#serializers) if you do not already have a serializer defined.
 - obscure headers containing sensitive information in log outputs (configurable with `obscureHeaders`)
+- TypeScript support
 
 ## Install
 
@@ -54,6 +55,12 @@ app.get('/', function (req, res) {
   req.log.info('YO DAWG!')
   res.send('ok')
 })
+```
+
+### Import using TypeScript
+
+```ts
+import bunyanMiddleware = require('bunyan-middleware')
 ```
 
 ## `X-Request-Id`
