@@ -1,5 +1,11 @@
 # Change Log
 
+## v1.0.0
+
+- Major: No longer warns on res.close event
+- better TypeScript support
+- some improvements to readme
+
 ## v0.8.0
 
 - add `filter` option let users filter out certain log messages
