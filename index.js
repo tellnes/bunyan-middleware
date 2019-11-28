@@ -91,6 +91,7 @@ module.exports = function (options, logger) {
 
     var prefs = {}
     prefs[logName] = id
+    prefs.req_path = req.path
     req.log = res.log = logger.child(prefs, true)
 
     req[propertyName] = res[propertyName] = id
