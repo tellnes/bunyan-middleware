@@ -26,12 +26,14 @@ declare namespace bunyanMiddleware {
 }
 
 
-declare module 'express' {
-  export interface Request {
-    log: Logger
-    reqId: string
-  }
-  export interface Response {
-    log: Logger
+declare global {
+  namespace Express {
+    export interface Request {
+      log: Logger
+      reqId: string
+    }
+    export interface Response {
+      log: Logger
+    }
   }
 }
