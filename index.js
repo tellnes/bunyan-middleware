@@ -117,7 +117,7 @@ module.exports = function (options, logger) {
           })
         }
       }
-      res.log[level](reqFinishData, finishMessage)
+      res.log[level](reqFinishData, finishMessage(req, res))
     })
 
     next()
