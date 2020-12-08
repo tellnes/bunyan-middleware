@@ -25,6 +25,7 @@ module.exports = function (options, logger) {
     , filter = options.filter
     , parentRequestSerializer = logger.serializers && logger.serializers.req
     , level = options.level || 'info'
+    , finishMessage = options.finishMessage || (() => 'request finish')  
 
   function processHeaderNames(property) {
     if (property && property.length) {
@@ -116,7 +117,7 @@ module.exports = function (options, logger) {
           })
         }
       }
-      res.log[level](reqFinishData, 'request finish')
+      res.log[level](reqFinishData, finishMessage(req, res))
     })
 
     next()

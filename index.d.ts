@@ -19,6 +19,7 @@ declare namespace bunyanMiddleware {
     verbose?: boolean
     level?: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'fatal'
     filter?: { (req: Request, res: Response): boolean }
+    finishMessage?: (req: Request, res: Response) => string
   }
   export interface ParamsWithLogger extends Params {
     logger: Logger
