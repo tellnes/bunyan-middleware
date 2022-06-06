@@ -1,15 +1,14 @@
 {
   "name": "bunyan-middleware",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Request, response logger middleware using bunyan. Also provides request<>response duration.",
   "main": "index.js",
   "types": "./index.d.ts",
   "dependencies": {
     "@types/bunyan": "^1.8.6",
     "@types/express": "^4.0.35",
-    "uuid": "^3.0.0"
+    "uuid": "^8.3.2"
   },
-  "devDependencies": {},
   "scripts": {},
   "repository": {
     "type": "git",
